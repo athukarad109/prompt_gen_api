@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { Configuration, OpenAIApi } = require("openai");
 const fs = require('fs');
 const cors = require('cors')
+const PORT = process.env.PORT || 3030;
 
 const app = express();
 app.use(bodyParser.json());
@@ -90,7 +91,7 @@ app.post('/removebg', async (req, res) => {
     
 })
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log("App is running on http://localhost:3000");
+app.listen(PORT, () => {
+    console.log(`App is running on http://localhost:${PORT}`);
 })
 
