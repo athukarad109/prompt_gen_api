@@ -35,7 +35,7 @@ app.post('/generatePrompt', async (req, res) => {
     const resPrompt = completion.data.choices[0].message.content
 
     //saving prompts in text file
-    fs.appendFileSync('promts.txt', `For ${keywords} \n ${resPrompt} \n.\n`);
+    // fs.appendFileSync('promts.txt', `For ${keywords} \n ${resPrompt} \n.\n`);
 
     res.send(completion.data.choices[0].message);
 })
