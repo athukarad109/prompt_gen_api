@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Configuration, OpenAIApi } = require("openai");
 const fs = require('fs');
+const dotenv = require('dotenv');
 const cors = require('cors')
 const PORT = process.env.PORT || 3030;
 
@@ -9,9 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
+dotenv.config();
 
 const configuration = new Configuration({
-    apiKey: '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',
+    apiKey: process.env.API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
