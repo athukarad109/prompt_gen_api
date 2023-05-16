@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3030;
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: false }));
 
 const configuration = new Configuration({
     apiKey: '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',
