@@ -44,47 +44,57 @@ app.post('/generatePrompt', async (req, res) => {
 
 app.post('/generateImage', async (req, res) => {
 
-    const url = "https://stablediffusionapi.com/api/v3/text2img";
+    //With stable diffusion
+    // const url = "https://stablediffusionapi.com/api/v3/text2img";
+    // const {prompt} = req.body;
+    // const reqBody =
+    // {
+    //     "key": "kz9JsU77145EpNetv8ee9sYIWxxiCpTkIAAJaCr6n1A950W0tUESkiOV9Hbj",
+    //     "prompt": prompt,
+    //     "negative_prompt": "((out of frame)), ((extra fingers)), mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((tiling))), ((tile)), ((fleshpile)), ((ugly)), (((abstract))), blurry, ((bad anatomy)), ((bad proportions)), ((extra limbs)), cloned face, (((skinny))), glitchy, ((extra breasts)), ((double torso)), ((extra arms)), ((extra hands)), ((mangled fingers)), ((missing breasts)), (missing lips), ((ugly face)), ((fat)), ((extra legs)), anime",
+    //     "width": "512",
+    //     "height": "512",
+    //     "samples": "1",
+    //     "num_inference_steps": "20",
+    //     "seed": null,
+    //     "guidance_scale": 7.5,
+    //     "safety_checker": "yes",
+    //     "webhook": null,
+    //     "track_id": null
+    // }
+
+    // const response = await fetch(url, {
+    //     method: 'POST',
+    //     body: JSON.stringify(reqBody),
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     }
+    // })
+
+    // const data = await response.json();
+    // const picId = await data.id;
+
+    // const getPic = await fetch(`https://stablediffusionapi.com/api/v3/dreambooth/fetch/${picId}`,{
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //         "key": "kz9JsU77145EpNetv8ee9sYIWxxiCpTkIAAJaCr6n1A950W0tUESkiOV9Hbj"
+    //     }),
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     }
+    // })
+
+    // const picRes = await getPic.json();
+    // res.send(picRes)
+
     const {prompt} = req.body;
-    const reqBody =
-    {
-        "key": "kz9JsU77145EpNetv8ee9sYIWxxiCpTkIAAJaCr6n1A950W0tUESkiOV9Hbj",
-        "prompt": prompt,
-        "negative_prompt": "((out of frame)), ((extra fingers)), mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((tiling))), ((tile)), ((fleshpile)), ((ugly)), (((abstract))), blurry, ((bad anatomy)), ((bad proportions)), ((extra limbs)), cloned face, (((skinny))), glitchy, ((extra breasts)), ((double torso)), ((extra arms)), ((extra hands)), ((mangled fingers)), ((missing breasts)), (missing lips), ((ugly face)), ((fat)), ((extra legs)), anime",
-        "width": "512",
-        "height": "512",
-        "samples": "1",
-        "num_inference_steps": "20",
-        "seed": null,
-        "guidance_scale": 7.5,
-        "safety_checker": "yes",
-        "webhook": null,
-        "track_id": null
-    }
-
-    const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(reqBody),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-
-    const data = await response.json();
-    const picId = await data.id;
-
-    const getPic = await fetch(`https://stablediffusionapi.com/api/v3/dreambooth/fetch/${picId}`,{
-        method: 'POST',
-        body: JSON.stringify({
-            "key": "kz9JsU77145EpNetv8ee9sYIWxxiCpTkIAAJaCr6n1A950W0tUESkiOV9Hbj"
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-
-    const picRes = await getPic.json();
-    res.send(picRes)
+    const response = await openai.createImage({
+        prompt: prompt,
+        n: 1,
+        size: "1024x1024",
+      });
+    const image_url = await response.data.data[0].url;
+    res.send(image_url)
 
 })
 
